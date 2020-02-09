@@ -55,8 +55,35 @@ const Sidebar = () => {
 const StyledSidebar = styled.aside`
   grid-area: sidebar;
   min-height: 100%;
+  background-color: ${props => props.theme.gray['800']};
   display: grid;
-  grid-template-rows: 70px 1fr 1fr;
+  grid-template-rows: 70px 0.5fr auto 2.5fr auto;
+
+  .logo {
+    grid-row: 1 / span 1;
+  }
+
+  .discover {
+    grid-row: 3 / span 1;
+    margin: 0px 15px 40px 15px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .genres {
+    grid-row: 4 / span 1;
+    margin: 0px 15px;
+    display: flex;
+    flex-direction: column;
+
+    .nav-sub-heading {
+      color: white;
+    }
+  }
+
+  .credit {
+    grid-row: 5 / span 1;
+  }
 `;
 
 export default Sidebar;
