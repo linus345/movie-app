@@ -12,6 +12,11 @@ const Sidebar = () => {
       <Logo className="logo" />
       <div className="discover">
         <NavLink
+          to="/popular"
+          icon={faFire}
+          text="Popular"
+        />
+        <NavLink
           to="/top"
           icon={faStar}
           text="Top"
@@ -20,11 +25,6 @@ const Sidebar = () => {
           to="/coming"
           icon={faCalendar}
           text="Coming"
-        />
-        <NavLink
-          to="/popular"
-          icon={faFire}
-          text="Popular"
         />
       </div>
       <div className="genres">
