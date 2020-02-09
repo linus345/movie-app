@@ -1,23 +1,52 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { faFire, faStar, faCalendar, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+
+import Logo from './Logo';
+import NavLink from './NavLink';
 
 const Sidebar = () => {
   return (
     <StyledSidebar>
-      <div className="logo">
-        <h1>Movies</h1>
-      </div>
+      <Logo className="logo" />
       <div className="discover">
-        <NavLink to="/popular">Popular</NavLink>
-        <NavLink to="/top">Top</NavLink>
-        <NavLink to="/coming">Coming</NavLink>
+        <NavLink
+          to="/top"
+          icon={faStar}
+          text="Top"
+        />
+        <NavLink
+          to="/coming"
+          icon={faCalendar}
+          text="Coming"
+        />
+        <NavLink
+          to="/popular"
+          icon={faFire}
+          text="Popular"
+        />
       </div>
       <div className="genres">
-        <p>Popular genres</p>
-        <NavLink to="/action">Action</NavLink>
-        <NavLink to="/drama">Drama</NavLink>
-        <NavLink to="/scifi">Sci-Fi</NavLink>
+        <p className="nav-sub-heading">Popular genres</p>
+        <NavLink
+          to="/action"
+          icon={faCircleNotch}
+          text="Action"
+        />
+        <NavLink
+          to="/drama"
+          icon={faCircleNotch}
+          text="Drama"
+        />
+        <NavLink
+          to="/scifi"
+          icon={faCircleNotch}
+          text="Sci-Fi"
+        />
+      </div>
+      <div className="credit">
+        <Link to="/credits">Credits</Link>
       </div>
     </StyledSidebar>
   );
