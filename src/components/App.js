@@ -2,6 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
+// pages
+import Credits from '../pages/Credits';
+
+// components
 import Layout from './Layout';
 import Sidebar from './Sidebar';
 
@@ -43,7 +47,7 @@ function App() {
             <Route path="/popular" render={() => <p>popular</p>} />
             <Route path="/top" render={() => <p>top</p>} />
             <Route path="/coming" render={() => <p>coming</p>} />
-            <Route path="/credits" render={() => <p>credits</p>} />
+            <Route path="/credits" component={Credits} />
           </Switch>
         </Router>
       </Layout>
