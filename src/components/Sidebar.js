@@ -5,6 +5,7 @@ import { faFire, faStar, faCalendar, faCircleNotch } from '@fortawesome/free-sol
 
 import Logo from './Logo';
 import NavLink from './NavLink';
+import tmdbLogo from '../images/tmdb-logo.svg';
 
 const Sidebar = () => {
   return (
@@ -46,7 +47,8 @@ const Sidebar = () => {
         />
       </div>
       <div className="credit">
-        <Link to="/credits">Credits</Link>
+        <img src={tmdbLogo} alt="TMDb Logo" className="tmdb-logo" />
+        <Link to="/credits" className="link">Credits</Link>
       </div>
     </StyledSidebar>
   );
@@ -83,6 +85,19 @@ const StyledSidebar = styled.aside`
 
   .credit {
     grid-row: 5 / span 1;
+    border-top: 2px solid ${props => props.theme.gray['700']};
+    padding: 25px 15px;
+
+    display: flex;
+    flex-direction: column;
+
+    .tmdb-logo {
+      max-width: 70%;
+    }
+
+    .link {
+      color: ${props => props.theme.white};
+    }
   }
 `;
 
