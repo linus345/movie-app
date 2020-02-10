@@ -7,6 +7,7 @@ import Credits from '../pages/Credits';
 
 // components
 import Layout from './Layout';
+import Main from './Main';
 import Sidebar from './Sidebar';
 
 const theme = {
@@ -42,13 +43,15 @@ function App() {
       <Layout className="App">
         <Router>
           <Sidebar />
-          <Switch>
-            <Route exact path="/" render={() => <p>home</p>} />
-            <Route path="/popular" render={() => <p>popular</p>} />
-            <Route path="/top" render={() => <p>top</p>} />
-            <Route path="/coming" render={() => <p>coming</p>} />
-            <Route path="/credits" component={Credits} />
-          </Switch>
+          <Main>
+            <Switch>
+              <Route exact path="/" render={() => <p>home</p>} />
+              <Route path="/popular" render={() => <p>popular</p>} />
+              <Route path="/top" render={() => <p>top</p>} />
+              <Route path="/coming" render={() => <p>coming</p>} />
+              <Route path="/credits" component={Credits} />
+            </Switch>
+          </Main>
         </Router>
       </Layout>
     </ThemeProvider>
