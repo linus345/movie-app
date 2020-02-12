@@ -56,7 +56,7 @@ const Sidebar = () => {
 
 const StyledSidebar = styled.aside`
   grid-area: sidebar;
-  min-height: 100%;
+  max-height: 100vh;
   background-color: ${props => props.theme.gray['800']};
   display: grid;
   grid-template-rows: 70px 0.5fr auto 2.5fr auto;
