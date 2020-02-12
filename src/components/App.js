@@ -1,9 +1,12 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
 // pages
 import Credits from '../pages/Credits';
+import Popular from '../pages/Popular';
+import Top from '../pages/Top';
+import Coming from '../pages/Coming';
 
 // components
 import Layout from './Layout';
@@ -45,10 +48,10 @@ function App() {
           <Sidebar />
           <Main>
             <Switch>
-              <Route exact path="/" render={() => <p>home</p>} />
-              <Route path="/popular" render={() => <p>popular</p>} />
-              <Route path="/top" render={() => <p>top</p>} />
-              <Route path="/coming" render={() => <p>coming</p>} />
+              <Route exact path="/" render={() => <Redirect to="/popular" />} />
+              <Route path="/popular" component={Popular} />
+              <Route path="/top" component={Top} />
+              <Route path="/coming" component={Coming} />
               <Route path="/credits" component={Credits} />
             </Switch>
           </Main>
