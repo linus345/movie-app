@@ -7,7 +7,7 @@ const Layout = styled.div`
   grid-template-columns: auto 1fr;
   grid-template-rows: 70px 1fr;
   grid-template-areas:
-    "sidebar x"
+    "sidebar main"
     "sidebar main";
 `;
 
