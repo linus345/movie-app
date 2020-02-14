@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import * as api from '../api';
 
 import MovieGrid from '../components/MovieGrid';
-import MovieCard from '../components/MovieCard';
+import MovieList from '../components/MovieList';
 
 const Coming = () => {
   const [movies, setMovies] = useState([]);
@@ -42,7 +42,7 @@ const Coming = () => {
           <p>Error: {JSON.stringify(err)}</p>
         ) : (
           <MovieGrid>
-            {movies.map(movie => <MovieCard key={movie.id} movie={movie} imageBase={api.imageBase} />)}
+            <MovieList movies={movies} />
           </MovieGrid>
         )
       }
