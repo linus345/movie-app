@@ -1,14 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const MovieCard = ({
   movie: {
-    title, vote_count, poster_path, overview
+    id, title, vote_count, poster_path, overview
   },
   imageBase
 }) => {
   return(
-    <StyledMovieCard>
+    <StyledMovieCard to={`/movie/${id}`}>
       <img src={`${imageBase}/w342/${poster_path}`} alt="movie poster" />
       <div className="info">
         <h3>{title}</h3>
@@ -17,7 +18,7 @@ const MovieCard = ({
   );
 }
 
-const StyledMovieCard = styled.div`
+const StyledMovieCard = styled(Link)`
   display: flex;
   position: relative;
   height: 100%;
@@ -46,6 +47,7 @@ const StyledMovieCard = styled.div`
   .info {
     border-radius: 5px;
     background-color: white;
+    color: black;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
     padding: 0 5px;
     width: 90%;
