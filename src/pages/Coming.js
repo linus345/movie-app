@@ -3,6 +3,9 @@ import styled from 'styled-components';
 
 import * as api from '../api';
 
+import MovieGrid from '../components/MovieGrid';
+import MovieCard from '../components/MovieCard';
+
 const Coming = () => {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(null);
@@ -35,7 +38,14 @@ const Coming = () => {
   return(
     <div>
       <h1>Coming</h1>
-      <p>{JSON.stringify(movies)}</p>
+      {err ? (
+          <p>Error: {JSON.stringify(err)}</p>
+        ) : (
+          <MovieGrid>
+            {movies.map(movie => <MovieCard key={movie.id} movie={movie} imageBase={api.imageBase} />)}
+          </MovieGrid>
+        )
+      }
     </div>
   );
 }

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import * as api from '../api';
 
+import MovieGrid from '../components/MovieGrid';
 import MovieCard from '../components/MovieCard';
 
 const Popular = () => {
@@ -40,9 +41,9 @@ const Popular = () => {
       {err ? (
           <p>Error: {JSON.stringify(err)}</p>
         ) : (
-          <div>
-            {movies.map(movie => <MovieCard key={movie.id} movie={movie} />)}
-          </div>
+          <MovieGrid>
+            {movies.map(movie => <MovieCard key={movie.id} movie={movie} imageBase={api.imageBase} />)}
+          </MovieGrid>
         )
       }
     </div>
