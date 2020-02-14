@@ -17,3 +17,7 @@ export const getTop = () => {
 export const getComing = () => {
   return instance.get("/coming");
 }
+
+export const getMovie = (movieId) => {
+  return instance.get(`/movie/${movieId}`);
+}
