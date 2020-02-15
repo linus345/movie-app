@@ -8,6 +8,7 @@ import Popular from '../pages/Popular';
 import Top from '../pages/Top';
 import Coming from '../pages/Coming';
 import Movie from '../pages/Movie';
+import Genre from '../pages/Genre';
 
 // components
 import Layout from './Layout';
@@ -55,6 +56,7 @@ function App() {
               <Route path="/coming" component={Coming} />
               <Route path="/credits" component={Credits} />
               <Route path="/movie/:movieId" component={Movie} />
+              <Route path="/genre/:genreId" component={Genre} />
             </Switch>
           </Main>
         </Router>
