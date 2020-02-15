@@ -25,3 +25,7 @@ export const getMovie = (movieId) => {
 export const getGenres = () => {
   return instance.get("/genre/movie/list");
 }
+
+export const getMoviesByGenreId = (genreId) => {
+  return instance.get(`/genre/${genreId}`);
+}
