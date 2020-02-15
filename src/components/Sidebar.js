@@ -1,13 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { faFire, faStar, faCalendar, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+
+import * as api from '../api';
 
 import Logo from './Logo';
 import NavLink from './NavLink';
 import tmdbLogo from '../images/tmdb-logo.svg';
 
 const Sidebar = () => {
+  const [genres, setGenres] = useState([]);
+  const [err, setErr] = useState(null);
+
+  const getGenres = async () => {
+    try {
+      const res = await api.getGenres();
+      console.log("genres res: ", res);
+      setGenres(res.data.genres);
+    } catch(err) {
+      if(err.response) {
+        console.log("genres err res: ", err.response);
+        setErr(err.response);
+      } else {
+        console.log("genres err: ", err);
+        setErr(err);
+      }
+    }
+  }
+
+  useEffect(() => {
+    getGenres();
+  }, []);
+
   return (
     <StyledSidebar>
       <Logo className="logo" />
@@ -29,22 +54,15 @@ const Sidebar = () => {
         />
       </div>
       <div className="genres">
-        <p className="nav-sub-heading">Popular genres</p>
-        <NavLink
-          to="/action"
-          icon={faCircleNotch}
-          text="Action"
-        />
-        <NavLink
-          to="/drama"
-          icon={faCircleNotch}
-          text="Drama"
-        />
-        <NavLink
-          to="/scifi"
-          icon={faCircleNotch}
-          text="Sci-Fi"
-        />
+        <p className="nav-sub-heading">Genres</p>
+        {genres.map(genre => (
+          <NavLink
+            key={genre.id}
+            to={`/genre/${genre.id}`}
+            icon={faCircleNotch}
+            text={genre.name}
+          />
+        ))}
       </div>
       <div className="credit">
         <img src={tmdbLogo} alt="TMDb Logo" className="tmdb-logo" />
@@ -77,6 +95,7 @@ const StyledSidebar = styled.aside`
     margin: 0px 15px;
     display: flex;
     flex-direction: column;
+    overflow: scroll;
 
     .nav-sub-heading {
       color: white;
