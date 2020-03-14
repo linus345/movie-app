@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
@@ -13,7 +13,9 @@ import Genre from '../pages/Genre';
 // components
 import Layout from './Layout';
 import Main from './Main';
+import Header from './Header';
 import Sidebar from './Sidebar';
+import Overlay from './Overlay';
 
 const theme = {
   black: "#000000",
@@ -40,14 +42,46 @@ const theme = {
     800: "#2C5282",
     900: "#2A4365",
   },
+  breakpoints: {
+    tablet: "(max-width: 996px)",
+  },
 }
 
 function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(window.innerWidth > 996);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    }
+  }, []);
+
+  const handleResize = () => {
+    if(window.innerWidth <= 996) {
+      setIsMenuOpen(false);
+    } else {
+      setIsMenuOpen(true);
+    }
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Layout className="App">
         <Router>
-          <Sidebar />
+          <Header
+            isMenuOpen={isMenuOpen}
+            setIsMenuOpen={setIsMenuOpen}
+          />
+          <Sidebar
+            isMenuOpen={isMenuOpen}
+            setIsMenuOpen={setIsMenuOpen}
+          />
+          <Overlay
+            isMenuOpen={isMenuOpen}
+            onClick={() => setIsMenuOpen(false)}
+          />
           <Main>
             <Switch>
               <Route exact path="/" render={() => <Redirect to="/popular" />} />

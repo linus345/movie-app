@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { faFire, faStar, faCalendar, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faFire, faStar, faCalendar, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
 import * as api from '../api';
 
-import Logo from './Logo';
 import NavLink from './NavLink';
 import tmdbLogo from '../images/tmdb-logo.svg';
+import ToggleMenu from './ToggleMenu';
 
-const Sidebar = () => {
+const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
   const [genres, setGenres] = useState([]);
   const [err, setErr] = useState(null);
 
@@ -34,23 +34,30 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <StyledSidebar>
-      <Logo className="logo" />
+    <StyledSidebar isMenuOpen={isMenuOpen}>
+      <ToggleMenu
+        isMenuOpen={isMenuOpen}
+        setIsMenuOpen={setIsMenuOpen}
+        className="toggle-menu"
+      />
       <div className="discover">
         <NavLink
           to="/popular"
           icon={faFire}
           text="Popular"
+          setIsMenuOpen={setIsMenuOpen}
         />
         <NavLink
           to="/top"
           icon={faStar}
           text="Top"
+          setIsMenuOpen={setIsMenuOpen}
         />
         <NavLink
           to="/coming"
           icon={faCalendar}
           text="Coming"
+          setIsMenuOpen={setIsMenuOpen}
         />
       </div>
       <div className="genres">
@@ -61,25 +68,40 @@ const Sidebar = () => {
             to={`/genre/${genre.id}`}
             icon={faCircleNotch}
             text={genre.name}
+            setIsMenuOpen={setIsMenuOpen}
           />
         ))}
       </div>
       <div className="credit">
         <img src={tmdbLogo} alt="TMDb Logo" className="tmdb-logo" />
-        <Link to="/credits" className="link">Credits</Link>
+        <Link
+          to="/credits"
+          className="link"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          Credits
+        </Link>
       </div>
     </StyledSidebar>
   );
 }
 
 const StyledSidebar = styled.aside`
+  position: fixed;
+  z-index: 2;
   grid-area: sidebar;
+  height: 100vh;
+  width: 205px;
   max-height: 100vh;
   background-color: ${props => props.theme.gray['800']};
   display: grid;
   grid-template-rows: 70px 0.5fr auto 2.5fr auto;
+  transform: ${props => props.isMenuOpen ?
+    "translateX(0px)" :
+    "translateX(-205px)"};
+  transition: transform 0.3s;
 
-  .logo {
+  .toggle-menu {
     grid-row: 1 / span 1;
   }
 
