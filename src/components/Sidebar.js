@@ -42,19 +42,19 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
       />
       <div className="discover">
         <NavLink
-          to="/popular"
+          to="/discover/popular"
           icon={faFire}
           text="Popular"
           setIsMenuOpen={setIsMenuOpen}
         />
         <NavLink
-          to="/top"
+          to="/discover/top"
           icon={faStar}
           text="Top"
           setIsMenuOpen={setIsMenuOpen}
         />
         <NavLink
-          to="/coming"
+          to="/discover/coming"
           icon={faCalendar}
           text="Coming"
           setIsMenuOpen={setIsMenuOpen}
