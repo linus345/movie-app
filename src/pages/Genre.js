@@ -7,6 +7,7 @@ import * as api from '../api';
 import MovieGrid from '../components/MovieGrid';
 import MovieList from '../components/MovieList';
 import Pagination from '../components/Pagination';
+import LoadingMovies from '../components/LoadingMovies';
 
 
 const Genre = () => {
@@ -14,6 +15,7 @@ const Genre = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [err, setErr] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { genreId } = useParams();
   const location = useLocation();
 
@@ -26,6 +28,7 @@ const Genre = () => {
 
   const getMovieByGenreId = async (genreId, query) => {
     try {
+      setLoading(true);
       const res = await api.getMoviesByGenreId(genreId, query);
       console.log("res: ", res);
       setMovies(res.data.results);
@@ -39,13 +42,15 @@ const Genre = () => {
         console.log("err: ", err);
         setErr(err);
       }
+    } finally {
+      setLoading(false);
     }
   }
 
   return(
     <StyledGenre>
       <h1>Genre movies</h1>
-      {err ? (
+      {loading ? <LoadingMovies /> : err ? (
           <p>Error: {JSON.stringify(err)}</p>
         ) : (
           <>
