@@ -7,12 +7,14 @@ import * as api from '../api';
 import MovieGrid from '../components/MovieGrid';
 import MovieList from '../components/MovieList';
 import Pagination from '../components/Pagination';
+import LoadingMovies from '../components/LoadingMovies';
 
 const Discover = () => {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [err, setErr] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { by } = useParams();
   const location = useLocation();
 
@@ -26,6 +28,7 @@ const Discover = () => {
 
   const fetchMovies = async (by, query) => {
     try {
+      setLoading(true);
       const res = await api.discoverMovies(by, query);
       console.log("res: ", res);
       setMovies(res.data.results);
@@ -39,13 +42,15 @@ const Discover = () => {
         console.log("err: ", err);
         setErr(err);
       }
+    } finally {
+      setLoading(false);
     }
   }
 
   return(
     <StyledDiscover>
       <h1 className="title">{by}</h1>
-      {err ? (
+      {loading ? <LoadingMovies /> : err ? (
           <p>Error: {JSON.stringify(err)}</p>
         ) : (
           <>
