@@ -3,11 +3,11 @@ import { NavLink as RouterNavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon as FaIcon } from '@fortawesome/react-fontawesome';
 
-const NavLink = ({ to, icon, text, setIsMenuOpen }) => (
+const NavLink = ({ to, icon, text, setIsMenuOpen, isMobile }) => (
   <StyledNavLink
     to={to}
     activeClassName="active"
-    onClick={() => setIsMenuOpen(false)}
+    onClick={() => isMobile ? setIsMenuOpen(false) : null}
   >
     <FaIcon icon={icon} className="fa-fw icon" />
     {text}

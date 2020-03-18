@@ -9,7 +9,7 @@ import NavLink from './NavLink';
 import tmdbLogo from '../images/tmdb-logo.svg';
 import ToggleMenu from './ToggleMenu';
 
-const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
+const Sidebar = ({ isMenuOpen, setIsMenuOpen, isMobile }) => {
   const [genres, setGenres] = useState([]);
   const [err, setErr] = useState(null);
 
@@ -46,18 +46,21 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
           icon={faFire}
           text="Popular"
           setIsMenuOpen={setIsMenuOpen}
+          isMobile={isMobile}
         />
         <NavLink
           to="/discover/top"
           icon={faStar}
           text="Top"
           setIsMenuOpen={setIsMenuOpen}
+          isMobile={isMobile}
         />
         <NavLink
           to="/discover/coming"
           icon={faCalendar}
           text="Coming"
           setIsMenuOpen={setIsMenuOpen}
+          isMobile={isMobile}
         />
       </div>
       <div className="genres">
@@ -69,6 +72,7 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
             icon={faCircleNotch}
             text={genre.name}
             setIsMenuOpen={setIsMenuOpen}
+            isMobile={isMobile}
           />
         ))}
       </div>
@@ -77,7 +81,7 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
         <Link
           to="/credits"
           className="link"
-          onClick={() => setIsMenuOpen(false)}
+          onClick={() => isMobile ? setIsMenuOpen(false) : null}
         >
           Credits
         </Link>

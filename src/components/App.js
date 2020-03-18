@@ -47,6 +47,7 @@ const theme = {
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(window.innerWidth > 996);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 996);
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
@@ -59,8 +60,10 @@ function App() {
   const handleResize = () => {
     if(window.innerWidth <= 996) {
       setIsMenuOpen(false);
+      setIsMobile(true);
     } else {
       setIsMenuOpen(true);
+      setIsMobile(false);
     }
   }
 
@@ -75,7 +78,9 @@ function App() {
           <Sidebar
             isMenuOpen={isMenuOpen}
             setIsMenuOpen={setIsMenuOpen}
+            isMobile={isMobile}
           />
+          {/* Overlay only shows when sidebar is open on small screens */}
           <Overlay
             isMenuOpen={isMenuOpen}
             onClick={() => setIsMenuOpen(false)}
