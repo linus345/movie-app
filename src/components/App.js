@@ -4,9 +4,7 @@ import { ThemeProvider } from 'styled-components';
 
 // pages
 import Credits from '../pages/Credits';
-import Popular from '../pages/Popular';
-import Top from '../pages/Top';
-import Coming from '../pages/Coming';
+import Discover from '../pages/Discover';
 import Movie from '../pages/Movie';
 import Genre from '../pages/Genre';
 
@@ -84,10 +82,12 @@ function App() {
           />
           <Main>
             <Switch>
-              <Route exact path="/" render={() => <Redirect to="/popular" />} />
-              <Route path="/popular" component={Popular} />
-              <Route path="/top" component={Top} />
-              <Route path="/coming" component={Coming} />
+              <Route
+                exact
+                path="/"
+                render={() => <Redirect to="/discover/popular" />}
+              />
+              <Route exact path="/discover/:by" component={Discover} />
               <Route path="/credits" component={Credits} />
               <Route path="/movie/:movieId" component={Movie} />
               <Route path="/genre/:genreId" component={Genre} />
