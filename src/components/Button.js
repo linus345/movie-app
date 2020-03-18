@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Button = styled.button`
+const Button = styled(Link)`
   background-color: ${props => props.theme.gray['300']};
   color: ${props => props.theme.gray['900']};
   width: auto;
@@ -23,10 +24,6 @@ const Button = styled.button`
   > * {
     display: inline-block;
     margin: 0;
-  }
-
-  >:first-child {
-    margin-right: 10px;
   }
 `;
 
