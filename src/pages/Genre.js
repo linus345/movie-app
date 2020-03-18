@@ -10,7 +10,7 @@ import Pagination from '../components/Pagination';
 import LoadingMovies from '../components/LoadingMovies';
 
 
-const Genre = () => {
+const Genre = ({ mainEl }) => {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -57,7 +57,7 @@ const Genre = () => {
             <MovieGrid>
               <MovieList movies={movies} />
             </MovieGrid>
-            <Pagination page={page} totalPages={totalPages} />
+            <Pagination page={page} totalPages={totalPages} mainEl={mainEl} />
           </>
         )
       }

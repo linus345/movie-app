@@ -9,7 +9,7 @@ import MovieList from '../components/MovieList';
 import Pagination from '../components/Pagination';
 import LoadingMovies from '../components/LoadingMovies';
 
-const Discover = () => {
+const Discover = ({ mainEl }) => {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -57,7 +57,7 @@ const Discover = () => {
             <MovieGrid>
               <MovieList movies={movies} />
             </MovieGrid>
-            <Pagination page={page} totalPages={totalPages} />
+            <Pagination page={page} totalPages={totalPages} mainEl={mainEl} />
           </>
         )
       }

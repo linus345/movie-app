@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
@@ -48,6 +48,7 @@ const theme = {
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(window.innerWidth > 996);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 996);
+  const mainEl = useRef(null);
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
@@ -85,17 +86,30 @@ function App() {
             isMenuOpen={isMenuOpen}
             onClick={() => setIsMenuOpen(false)}
           />
-          <Main>
+          <Main ref={mainEl}>
             <Switch>
               <Route
                 exact
                 path="/"
                 render={() => <Redirect to="/discover/popular" />}
               />
-              <Route exact path="/discover/:by" component={Discover} />
-              <Route path="/credits" component={Credits} />
-              <Route path="/movie/:movieId" component={Movie} />
-              <Route path="/genre/:genreId" component={Genre} />
+              <Route
+                exact
+                path="/discover/:by"
+                render={() => <Discover mainEl={mainEl} />}
+              />
+              <Route
+                path="/credits"
+                component={Credits}
+              />
+              <Route
+                path="/movie/:movieId"
+                component={Movie}
+              />
+              <Route
+                path="/genre/:genreId"
+                render={() => <Genre mainEl={mainEl} />}
+              />
             </Switch>
           </Main>
         </Router>
