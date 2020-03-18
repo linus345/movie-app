@@ -6,16 +6,12 @@ const instance = axios.create({
 
 export const imageBase = "https://image.tmdb.org/t/p";
 
-export const getPopular = () => {
-  return instance.get("/popular");
-}
-
-export const getTop = () => {
-  return instance.get("/top");
-}
-
-export const getComing = () => {
-  return instance.get("/coming");
+export const discoverMovies = (by, query = null) => {
+  let params = {};
+  if(query) {
+    params.page = query.get("page") || "1";
+  }
+  return instance.get(`/${by}`, { params });
 }
 
 export const getMovie = (movieId) => {
@@ -26,6 +22,10 @@ export const getGenres = () => {
   return instance.get("/genre/movie/list");
 }
 
-export const getMoviesByGenreId = (genreId) => {
-  return instance.get(`/genre/${genreId}`);
+export const getMoviesByGenreId = (genreId, query = null) => {
+  let params = {};
+  if(query) {
+    params.page = query.get("page") || "1";
+  }
+  return instance.get(`/genre/${genreId}`, { params });
 }
