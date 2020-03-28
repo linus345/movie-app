@@ -6,7 +6,7 @@ import MovieCastTab from './MovieCastTab';
 import MoviePhotosTab from './MoviePhotosTab';
 import MovieSimilarTab from './MovieSimilarTab';
 
-const MovieTabs = ({ movie }) => {
+const MovieTabs = ({ movie, mainEl }) => {
   const tabs = {
     "Details": MovieDetailsTab,
     "Cast": MovieCastTab,
@@ -29,7 +29,7 @@ const MovieTabs = ({ movie }) => {
           </h3>
         ))}
       </div>
-      <Component movie={movie} />
+      <Component movie={movie} mainEl={mainEl} />
     </StyledMovieTabs>
   );
 }

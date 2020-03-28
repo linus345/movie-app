@@ -104,7 +104,7 @@ function App() {
               />
               <Route
                 path="/movie/:movieId"
-                component={Movie}
+                render={props => <Movie mainEl={mainEl} {...props} />}
               />
               <Route
                 path="/genre/:genreId"

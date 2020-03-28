@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React from 'react';
 
 import LoadingMovies from './LoadingMovies';
 import MovieGrid from './MovieGrid';
@@ -7,13 +6,7 @@ import MovieList from './MovieList';
 import Pagination from './Pagination';
 
 const LoadMovies = ({ movies, loading, err, page, totalPages, mainEl }) => {
-  // TODO: useEffect to update movie whenever location changes
-  const location = useLocation();
-
-  useEffect(() => {
-    console.log("useEffect, location changed in LoadMovies");
-  }, [location]);
-
+  console.log("rendering LoadMovies");
   return(
     <>
       {loading ? <LoadingMovies /> : err ? (
@@ -21,7 +14,7 @@ const LoadMovies = ({ movies, loading, err, page, totalPages, mainEl }) => {
         ) : (
           <>
             <MovieGrid>
-              <MovieList movies={movies} />
+              <MovieList movies={movies} mainEl={mainEl} />
             </MovieGrid>
             {page &&
               totalPages &&

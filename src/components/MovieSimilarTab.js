@@ -3,12 +3,13 @@ import styled from 'styled-components';
 
 import LoadMovies from './LoadMovies';
 
-const MovieSimilarTab = ({ movie }) => (
+const MovieSimilarTab = ({ movie, mainEl }) => (
   <StyledMovieSimilarTab>
     <LoadMovies
       movies={movie.similar.results}
       loading={false}
       err={null}
+      mainEl={mainEl}
     />
   </StyledMovieSimilarTab>
 );

@@ -6,21 +6,18 @@ import * as api from '../api';
 
 import defaultMoviePoster from '../images/default-movie-poster.svg';
 
-const MovieCard = ({
-  movie: {
-    id, title, vote_count, poster_path, overview
-  }
-}) => {
+const MovieCard = props => {
+  const { movie } = props;
   return(
-    <StyledMovieCard to={`/movie/${id}`}>
+    <StyledMovieCard {...props} to={`/movie/${movie.id}`}>
       <img
-        src={poster_path ? (
-          `${api.imageBase}/w342/${poster_path}`
+        src={movie.poster_path ? (
+          `${api.imageBase}/w342/${movie.poster_path}`
         ) : defaultMoviePoster}
         alt="movie poster"
       />
       <div className="info">
-        <h3>{title}</h3>
+        <h3>{movie.title}</h3>
       </div>
     </StyledMovieCard>
   );

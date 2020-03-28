@@ -4,11 +4,8 @@ import styled from 'styled-components';
 
 import * as api from '../api';
 
-import MovieGrid from '../components/MovieGrid';
-import MovieList from '../components/MovieList';
-import Pagination from '../components/Pagination';
+import LoadMovies from '../components/LoadMovies';
 import LoadingMovies from '../components/LoadingMovies';
-
 
 const Genre = ({ mainEl }) => {
   const [movies, setMovies] = useState([]);
@@ -50,17 +47,14 @@ const Genre = ({ mainEl }) => {
   return(
     <StyledGenre>
       <h1>Genre movies</h1>
-      {loading ? <LoadingMovies /> : err ? (
-          <p>Error: {JSON.stringify(err)}</p>
-        ) : (
-          <>
-            <MovieGrid>
-              <MovieList movies={movies} />
-            </MovieGrid>
-            <Pagination page={page} totalPages={totalPages} mainEl={mainEl} />
-          </>
-        )
-      }
+      <LoadMovies
+        movies={movies}
+        loading={loading}
+        err={err}
+        page={page}
+        totalPages={totalPages}
+        mainEl={mainEl}
+      />
     </StyledGenre>
   );
 }

@@ -13,7 +13,7 @@ import MovieShortInfo from '../components/MovieShortInfo';
 import Button from '../components/Button';
 import defaultMovieBackdrop from '../images/default-movie-backdrop.svg';
 
-const Movie = ({ location, history }) => {
+const Movie = ({ location, history, mainEl }) => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -54,7 +54,7 @@ const Movie = ({ location, history }) => {
 
   useEffect(() => {
     getMovie(movieId);
-  }, []);
+  }, [location]);
 
   if(err) return <p>Error: {JSON.stringify(err)}</p>
   if(loading) return <p>Loading...</p>
@@ -81,7 +81,7 @@ const Movie = ({ location, history }) => {
           )}
         </MoviePoster>
         <MovieShortInfo movie={movie} />
-        <MovieTabs movie={movie} />
+        <MovieTabs movie={movie} mainEl={mainEl} />
       </MovieDetailsGrid>
     </Fragment>
   );
