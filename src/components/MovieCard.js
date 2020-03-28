@@ -4,6 +4,8 @@ import styled from 'styled-components';
 
 import * as api from '../api';
 
+import defaultMoviePoster from '../images/default-movie-poster.svg';
+
 const MovieCard = ({
   movie: {
     id, title, vote_count, poster_path, overview
@@ -11,7 +13,12 @@ const MovieCard = ({
 }) => {
   return(
     <StyledMovieCard to={`/movie/${id}`}>
-      <img src={`${api.imageBase}/w342/${poster_path}`} alt="movie poster" />
+      <img
+        src={poster_path ? (
+          `${api.imageBase}/w342/${poster_path}`
+        ) : defaultMoviePoster}
+        alt="movie poster"
+      />
       <div className="info">
         <h3>{title}</h3>
       </div>
