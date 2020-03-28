@@ -1,0 +1,22 @@
+import React from 'react';
+import styled from 'styled-components';
+
+import LoadMovies from './LoadMovies';
+
+const MovieSimilarTab = ({ movie }) => (
+  <StyledMovieSimilarTab>
+    <LoadMovies
+      movies={movie.similar.results}
+      loading={false}
+      err={null}
+    />
+  </StyledMovieSimilarTab>
+);
+
+const StyledMovieSimilarTab = styled.div`
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-top: none;
+  padding: 20px 10px 10px 10px;
+`;
+
+export default MovieSimilarTab;

@@ -21,24 +21,28 @@ const Pagination = ({ page, totalPages, mainEl }) => {
   return(
     <ButtonGroup>
       <ButtonInGroup
+        as={Link}
         to={`?page=${page == 1 ? page : page - 1}`}
         onClick={() => scrollToTop(mainEl)}
       >
         Prev
       </ButtonInGroup>
       <ButtonInGroup
+        as={Link}
         to="?page=1"
         onClick={() => scrollToTop(mainEl)}
       >
         1
       </ButtonInGroup>
       <ButtonInGroup
+        as={Link}
         to={`?page=${totalPages}`}
         onClick={() => scrollToTop(mainEl)}
       >
         {totalPages}
       </ButtonInGroup>
       <ButtonInGroup
+        as={Link}
         to={`?page=${page == totalPages ? page : page + 1}`}
         onClick={() => scrollToTop(mainEl)}
       >

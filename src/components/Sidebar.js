@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { faTimes, faFire, faStar, faCalendar, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { faFire, faStar, faCalendar, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
 import * as api from '../api';
 
@@ -92,7 +92,7 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen, isMobile }) => {
 
 const StyledSidebar = styled.aside`
   position: fixed;
-  z-index: 2;
+  z-index: 101;
   grid-area: sidebar;
   height: 100vh;
   width: 205px;

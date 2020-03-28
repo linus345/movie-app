@@ -2,15 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import * as api from '../api';
+
 const MovieCard = ({
   movie: {
     id, title, vote_count, poster_path, overview
-  },
-  imageBase
+  }
 }) => {
   return(
     <StyledMovieCard to={`/movie/${id}`}>
-      <img src={`${imageBase}/w342/${poster_path}`} alt="movie poster" />
+      <img src={`${api.imageBase}/w342/${poster_path}`} alt="movie poster" />
       <div className="info">
         <h3>{title}</h3>
       </div>
@@ -21,6 +22,7 @@ const MovieCard = ({
 const StyledMovieCard = styled(Link)`
   display: flex;
   position: relative;
+  min-height: 290px;
   height: 100%;
   padding: 3px;
   border-radius: 5px;
