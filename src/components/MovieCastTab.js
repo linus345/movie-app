@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import * as api from '../api';
 
 import Button from './Button';
+import defaultProfile from '../images/default-profile.svg';
 
 // TODO:
 // Add link to /actor/:id
@@ -15,13 +16,15 @@ const MovieCastTab = ({ movie }) => (
       <ActorCard key={actor.id}>
         <ActorProfilePicture
           className="actor-photo"
-          imageUrl={`${api.imageBase}/w185${actor.profile_path}`}
+          imageUrl={actor.profile_path ? (
+            `${api.imageBase}/w185${actor.profile_path}`
+          ) : defaultProfile}
         />
         <div className="actor-info">
           <p className="actor-name">{actor.name}</p>
           <p className="actor-role">as <span>{actor.character}</span></p>
           <Button
-            small
+            small={1}
             as={Link}
             to={`/actor/${actor.id}`}
           >
