@@ -11,6 +11,7 @@ import MovieDetailsGrid from '../components/MovieDetailsGrid';
 import MovieTabs from '../components/MovieTabs';
 import MovieShortInfo from '../components/MovieShortInfo';
 import Button from '../components/Button';
+import defaultMovieBackdrop from '../images/default-movie-backdrop.svg';
 
 const Movie = ({ location, history }) => {
   const { movieId } = useParams();
@@ -65,7 +66,9 @@ const Movie = ({ location, history }) => {
       </Button>
       <MovieDetailsGrid>
         <MoviePoster
-          img={`${api.imageBase}/w1280/${movie.backdrop_path}`}
+          img={movie.backdrop_path ? (
+            `${api.imageBase}/w1280/${movie.backdrop_path}`
+          ) : defaultMovieBackdrop}
         >
           {trailerRef.current && (
             <a
