@@ -11,6 +11,7 @@ import MovieDetailsGrid from '../components/MovieDetailsGrid';
 import MovieTabs from '../components/MovieTabs';
 import MovieShortInfo from '../components/MovieShortInfo';
 import Button from '../components/Button';
+import LoadingMovie from '../components/LoadingMovie';
 import defaultMovieBackdrop from '../images/default-movie-backdrop.svg';
 
 const Movie = ({ location, history, mainEl }) => {
@@ -26,17 +27,16 @@ const Movie = ({ location, history, mainEl }) => {
       console.log("res: ", res);
       trailerRef.current = getTrailer(res.data.videos.results);
       setMovie(res.data);
-      setLoading(false);
     } catch(err) {
       if(err.response) {
         console.log("err res: ", err.response);
         setErr(err.response);
-        setLoading(false);
       } else {
         console.log("err: ", err);
         setErr(err);
-        setLoading(false);
       }
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -57,7 +57,6 @@ const Movie = ({ location, history, mainEl }) => {
   }, [location]);
 
   if(err) return <p>Error: {JSON.stringify(err)}</p>
-  if(loading) return <p>Loading...</p>
   return(
     <Fragment>
       <Button onClick={history.goBack}>
@@ -65,23 +64,27 @@ const Movie = ({ location, history, mainEl }) => {
         <p>Back</p>
       </Button>
       <MovieDetailsGrid>
-        <MoviePoster
-          img={movie.backdrop_path ? (
-            `${api.imageBase}/w1280/${movie.backdrop_path}`
-          ) : defaultMovieBackdrop}
-        >
-          {trailerRef.current && (
-            <a
-              href={`https://youtube.com/watch?v=${trailerRef.current.key}`}
-              target="_blank"
-              className="play-button"
+        {loading ? <LoadingMovie /> : (
+          <>
+            <MoviePoster
+              img={movie.backdrop_path ? (
+                `${api.imageBase}/w1280/${movie.backdrop_path}`
+              ) : defaultMovieBackdrop}
             >
-              <FaIcon icon={faPlayCircle} style={{ color: "white" }} />
-            </a>
-          )}
-        </MoviePoster>
-        <MovieShortInfo movie={movie} />
-        <MovieTabs movie={movie} mainEl={mainEl} />
+              {trailerRef.current && (
+                <a
+                  href={`https://youtube.com/watch?v=${trailerRef.current.key}`}
+                  target="_blank"
+                  className="play-button"
+                >
+                  <FaIcon icon={faPlayCircle} style={{ color: "white" }} />
+                </a>
+              )}
+            </MoviePoster>
+            <MovieShortInfo movie={movie} />
+            <MovieTabs movie={movie} mainEl={mainEl} />
+          </>
+        )}
       </MovieDetailsGrid>
     </Fragment>
   );
