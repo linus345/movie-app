@@ -1,19 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
 import * as api from '../api';
 
-const MoviePhotosTab = ({ movie }) => (
-  <StyledMoviePhotosTab>
+import Modal from './Modal';
+
+const modalRoot = document.getElementById("modal-root");
+
+const MoviePhotosTab = ({ movie }) => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
+  const el = useRef(null);
+
+  useEffect(() => {
+    el.current = document.createElement("div");
+    modalRoot.appendChild(el.current);
+
+    return () => {
+      modalRoot.removeChild(el.current);
+    }
+  }, []);
+
+  return (
+    <StyledMoviePhotosTab>
       {movie.images.backdrops.map((image, idx) => (
         <ImageBox
           key={idx}
           className="image"
           imageUrl={`${api.imageBase}/w300/${image.file_path}`}
+          onClick={() => {
+            setSelectedImage(`${api.imageBase}/w1280/${image.file_path}`);
+            setModalIsOpen(true)
+          }}
         />
       ))}
-  </StyledMoviePhotosTab>
-);
+      {modalIsOpen && ReactDOM.createPortal(
+        <Modal
+          onClose={() => setModalIsOpen(false)}
+        >
+          <img
+            src={selectedImage}
+            alt={`image from the movie ${movie.title}`}
+            className="full-image"
+          />
+        </Modal>,
+        el.current
+      )}
+    </StyledMoviePhotosTab>
+  );
+};
 
 const StyledMoviePhotosTab = styled.div`
   display: grid;
