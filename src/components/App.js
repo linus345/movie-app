@@ -7,6 +7,7 @@ import Credits from '../pages/Credits';
 import Discover from '../pages/Discover';
 import Movie from '../pages/Movie';
 import Genre from '../pages/Genre';
+import Actor from '../pages/Actor';
 
 // components
 import Layout from './Layout';
@@ -109,6 +110,10 @@ function App() {
               <Route
                 path="/genre/:genreId"
                 render={() => <Genre mainEl={mainEl} />}
+              />
+              <Route
+                path="/actor/:actorId"
+                render={props => <Actor mainEl={mainEl} {...props} />}
               />
             </Switch>
           </Main>

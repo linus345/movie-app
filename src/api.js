@@ -29,3 +29,12 @@ export const getMoviesByGenreId = (genreId, query = null) => {
   }
   return instance.get(`/genre/${genreId}`, { params });
 }
+
+// actor
+export const getMoviesWithActor = actorId => {
+  return instance.get(`/person/${actorId}/movies`);
+}
+
+export const getActor = actorId => {
+  return instance.get(`/person/${actorId}`);
+}
