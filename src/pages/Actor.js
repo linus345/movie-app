@@ -9,6 +9,8 @@ import * as api from '../api';
 import ActorGrid from '../components/ActorGrid';
 import LoadMovies from '../components/LoadMovies';
 import Button from '../components/Button';
+import LoadingActor from '../components/LoadingActor';
+import LoadingMovies from '../components/LoadingMovies';
 
 const Actor = ({ history, mainEl }) => {
   const { actorId } = useParams();
@@ -45,7 +47,6 @@ const Actor = ({ history, mainEl }) => {
     getActor(actorId);
   }, []);
 
-  if(loading) return <h1>Loading...</h1>;
   if(err) return <p>{JSON.stringify(err)}</p>
   return (
     <>
@@ -54,30 +55,35 @@ const Actor = ({ history, mainEl }) => {
         <p>Back</p>
       </Button>
       <ActorGrid>
-        <img
-          src={`${api.imageBase}/w185${actor.profile_path}`}
-          alt="actor profile image"
-        />
-        <div className="info">
-          <h1>{actor.name}</h1>
-          <p className="birthplace">{actor.place_of_birth}</p>
-          <p className="dates"><span>Born:</span> {actor.birthday}</p>
-          {actor.deathday && (
-            <p className="dates"><span>Dead:</span> {actor.deathday}</p>
-          )}
-          <h4 className="biography">Biography</h4>
-          <p className="text">{actor.biography}</p>
-        </div>
-        <div className="movies">
-          <h2>Also plays in</h2>
-          <LoadMovies
-            movies={movies}
-            loading={false}
-            err={null}
-            mainEl={mainEl}
-          />
-        </div>
+        {loading ? <LoadingActor /> : (
+          <>
+            <img
+              src={`${api.imageBase}/w185${actor.profile_path}`}
+              alt="actor profile image"
+            />
+            <div className="info">
+              <h1>{actor.name}</h1>
+              <p className="birthplace">{actor.place_of_birth}</p>
+              <p className="dates"><span>Born:</span> {actor.birthday}</p>
+              {actor.deathday && (
+                <p className="dates"><span>Dead:</span> {actor.deathday}</p>
+              )}
+              <h4 className="biography">Biography</h4>
+              <p className="text">{actor.biography}</p>
+            </div>
+            <div className="movies">
+              <h2>Also plays in</h2>
+              <LoadMovies
+                movies={movies}
+                loading={false}
+                err={null}
+                mainEl={mainEl}
+              />
+            </div>
+          </>
+        )}
       </ActorGrid>
+      {loading && <LoadingMovies />}
     </>
   );
 }
