@@ -8,6 +8,7 @@ import Discover from '../pages/Discover';
 import Movie from '../pages/Movie';
 import Genre from '../pages/Genre';
 import Actor from '../pages/Actor';
+import SearchPage from '../pages/SearchPage';
 
 // components
 import Layout from './Layout';
@@ -15,6 +16,7 @@ import Main from './Main';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Overlay from './Overlay';
+import Search from './Search';
 
 const theme = {
   black: "#000000",
@@ -76,7 +78,10 @@ function App() {
           <Header
             isMenuOpen={isMenuOpen}
             setIsMenuOpen={setIsMenuOpen}
-          />
+          >
+            {isMobile && <Search isMobile={isMobile} />}
+          </Header>
+          {!isMobile && <Search isMobile={isMobile} />}
           <Sidebar
             isMenuOpen={isMenuOpen}
             setIsMenuOpen={setIsMenuOpen}
@@ -114,6 +119,10 @@ function App() {
               <Route
                 path="/actor/:actorId"
                 render={props => <Actor mainEl={mainEl} {...props} />}
+              />
+              <Route
+                path="/search/:searchQuery"
+                render={props => <SearchPage mainEl={mainEl} {...props} />}
               />
             </Switch>
           </Main>
