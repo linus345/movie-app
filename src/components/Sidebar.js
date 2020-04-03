@@ -9,7 +9,7 @@ import NavLink from './NavLink';
 import tmdbLogo from '../images/tmdb-logo.svg';
 import ToggleMenu from './ToggleMenu';
 
-const Sidebar = ({ isMenuOpen, setIsMenuOpen, isMobile }) => {
+const Sidebar = ({ isMenuOpen, setIsMenuOpen, isTablet }) => {
   const [genres, setGenres] = useState([]);
   const [err, setErr] = useState(null);
 
@@ -46,21 +46,21 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen, isMobile }) => {
           icon={faFire}
           text="Popular"
           setIsMenuOpen={setIsMenuOpen}
-          isMobile={isMobile}
+          isTablet={isTablet}
         />
         <NavLink
           to="/discover/top"
           icon={faStar}
           text="Top"
           setIsMenuOpen={setIsMenuOpen}
-          isMobile={isMobile}
+          isTablet={isTablet}
         />
         <NavLink
           to="/discover/coming"
           icon={faCalendar}
           text="Coming"
           setIsMenuOpen={setIsMenuOpen}
-          isMobile={isMobile}
+          isTablet={isTablet}
         />
       </div>
       <div className="genres">
@@ -72,7 +72,7 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen, isMobile }) => {
             icon={faCircleNotch}
             text={genre.name}
             setIsMenuOpen={setIsMenuOpen}
-            isMobile={isMobile}
+            isTablet={isTablet}
           />
         ))}
       </div>
@@ -81,7 +81,7 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen, isMobile }) => {
         <Link
           to="/credits"
           className="link"
-          onClick={() => isMobile ? setIsMenuOpen(false) : null}
+          onClick={() => isTablet ? setIsMenuOpen(false) : null}
         >
           Credits
         </Link>

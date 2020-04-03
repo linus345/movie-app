@@ -12,7 +12,7 @@ import Button from '../components/Button';
 import LoadingActor from '../components/LoadingActor';
 import LoadingMovies from '../components/LoadingMovies';
 
-const Actor = ({ history, mainEl }) => {
+const Actor = ({ history, mainEl, isMobile }) => {
   const { actorId } = useParams();
   const [actor, setActor] = useState(null);
   const [movies, setMovies] = useState(null);
@@ -54,12 +54,13 @@ const Actor = ({ history, mainEl }) => {
         <FaIcon icon={faArrowLeft} />
         <p>Back</p>
       </Button>
-      <ActorGrid>
+      <ActorGrid isMobile={isMobile}>
         {loading ? <LoadingActor /> : (
           <>
             <img
               src={`${api.imageBase}/w185${actor.profile_path}`}
               alt="actor profile image"
+              className="actor-profile-image"
             />
             <div className="info">
               <h1>{actor.name}</h1>

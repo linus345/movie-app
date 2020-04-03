@@ -26,6 +26,7 @@ const MovieCard = props => {
 const StyledMovieCard = styled(Link)`
   display: flex;
   position: relative;
+  max-width: 350px;
   min-height: 290px;
   height: 100%;
   padding: 3px;

@@ -6,7 +6,7 @@ import MovieCastTab from './MovieCastTab';
 import MoviePhotosTab from './MoviePhotosTab';
 import MovieSimilarTab from './MovieSimilarTab';
 
-const MovieTabs = ({ movie, mainEl }) => {
+const MovieTabs = ({ movie, mainEl, isMobile }) => {
   const tabs = {
     "Details": MovieDetailsTab,
     "Cast": MovieCastTab,
@@ -29,7 +29,7 @@ const MovieTabs = ({ movie, mainEl }) => {
           </h3>
         ))}
       </div>
-      <Component movie={movie} mainEl={mainEl} />
+      <Component movie={movie} mainEl={mainEl} isMobile={isMobile} />
     </StyledMovieTabs>
   );
 }
@@ -39,6 +39,7 @@ const StyledMovieTabs = styled.div`
 
   .tabs {
     display: flex;
+    flex-wrap: wrap;
     background-color: black;
     border: 2px solid black;
     border-top: 2px solid rgba(255, 255, 255, 0.2);

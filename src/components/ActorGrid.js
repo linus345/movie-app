@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const ActorGrid = styled.div`
   display: grid;
@@ -6,14 +6,29 @@ const ActorGrid = styled.div`
   grid-template-rows: auto 1fr;
   grid-gap: 20px;
 
-  img {
+  ${props => props.isMobile && css`
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, auto);
+    grid-gap: 20px 0;
+  `}
+
+  .actor-profile-image {
     grid-area: 1 / 1 / span 1 / span 1;
-    max-width: 100%;
+    width: 100%;
+    max-width: 200px;
     border-radius: 4px;
+
+    ${props => props.isMobile && css`
+      grid-area: 1 / 1 / span 1 / span 1;
+    `}
   }
 
   .info {
     grid-area: 1 / 2 / span 1 / span 1;
+
+    ${props => props.isMobile && css`
+      grid-area: 2 / 1 / span 1 / span 1;
+    `}
 
     h1 {
       color: ${props => props.theme.gray["900"]};
@@ -47,6 +62,10 @@ const ActorGrid = styled.div`
 
   .movies {
     grid-area: 2 / 1 / span 1 / span 2;
+
+    ${props => props.isMobile && css`
+      grid-area: 3 / 1 / span 1 / span 1;
+    `}
   }
 `;
 

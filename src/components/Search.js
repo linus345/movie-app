@@ -68,7 +68,7 @@ const StyledSearchWrapper = styled.div`
   margin: 17px;
   transition: 0.2s;
 
-  ${props => !props.isMobile && css`
+  ${props => !props.isTablet && css`
     position: fixed;
     right: 0;
     top: 0;
@@ -112,6 +112,7 @@ const StyledSearch = styled.form`
     border-right: none;
     font-size: 20px;
     padding: 2px 8px;
+    width: 200px;
   }
 
   button {

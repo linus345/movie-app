@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import * as api from '../api';
 
@@ -10,8 +10,8 @@ import defaultProfile from '../images/default-profile.svg';
 // TODO:
 // Add link to /actor/:id
 // Link on name or add a "read more" button
-const MovieCastTab = ({ movie }) => (
-  <StyledMovieCastTab>
+const MovieCastTab = ({ movie, isMobile }) => (
+  <StyledMovieCastTab isMobile={isMobile}>
     {movie.credits.cast.map(actor => (
       <ActorCard key={actor.id}>
         <ActorProfilePicture
@@ -43,6 +43,10 @@ const StyledMovieCastTab = styled.div`
   border: 2px solid rgba(0, 0, 0, 0.1);
   border-top: none;
   padding: 20px 10px 10px 10px;
+
+  ${props => props.isMobile && css`
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  `}
 `;
 
 const ActorCard = styled.div`

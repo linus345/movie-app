@@ -6,6 +6,10 @@ const Main = styled.main`
   flex-direction: column;
   padding: 70px 60px;
   overflow-y: scroll;
+
+  @media ${props => props.theme.breakpoints.tablet} {
+    padding: 50px 30px;
+  }
 `;
 
 export default Main;

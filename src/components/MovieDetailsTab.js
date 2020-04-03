@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import * as api from '../api';
 
 import Button from './Button';
 
-const MovieDetailsTab = ({ movie }) => (
-  <StyledMovieDetailsTab>
+const MovieDetailsTab = ({ movie, isMobile }) => (
+  <StyledMovieDetailsTab isMobile={isMobile}>
     <p className="description">{movie.overview}</p>
     <div className="genres">
       {movie.genres.map(genre => (
@@ -21,20 +21,24 @@ const MovieDetailsTab = ({ movie }) => (
       ))}
     </div>
     <div className="links">
-      <Button
-        as="a"
-        href={movie.homepage}
-        target="_blank"
-      >
-        Website
-      </Button>
-      <Button
-        as="a"
-        href={`https://www.imdb.com/title/${movie.imdb_id}`}
-        target="_blank"
-      >
-        IMDB
-      </Button>
+      {movie.homepage && (
+        <Button
+          as="a"
+          href={movie.homepage}
+          target="_blank"
+        >
+          Website
+        </Button>
+      )}
+      {movie.imdb_id && (
+        <Button
+          as="a"
+          href={`https://www.imdb.com/title/${movie.imdb_id}`}
+          target="_blank"
+        >
+          IMDB
+        </Button>
+      )}
     </div>
   </StyledMovieDetailsTab>
 );
@@ -58,6 +62,10 @@ const StyledMovieDetailsTab = styled.div`
     flex-wrap: wrap;
     align-items: flex-end;
 
+    ${props => props.isMobile && css`
+      grid-column: 1 / span 2;
+    `}
+
     .genre-link {
       background-color: ${props => props.theme.blue["500"]};
       color: white;
@@ -78,6 +86,11 @@ const StyledMovieDetailsTab = styled.div`
   .links {
     justify-self: end;
     display: flex;
+
+    ${props => props.isMobile && css`
+      grid-column: 1 / span 2;
+      justify-self: start;
+    `}
 
     ${Button} {
       &:first-child {

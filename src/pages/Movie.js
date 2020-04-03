@@ -14,7 +14,7 @@ import Button from '../components/Button';
 import LoadingMovie from '../components/LoadingMovie';
 import defaultMovieBackdrop from '../images/default-movie-backdrop.svg';
 
-const Movie = ({ location, history, mainEl }) => {
+const Movie = ({ location, history, mainEl, isMobile }) => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -81,8 +81,8 @@ const Movie = ({ location, history, mainEl }) => {
                 </a>
               )}
             </MoviePoster>
-            <MovieShortInfo movie={movie} />
-            <MovieTabs movie={movie} mainEl={mainEl} />
+            <MovieShortInfo movie={movie} isMobile={isMobile} />
+            <MovieTabs movie={movie} mainEl={mainEl} isMobile={isMobile} />
           </>
         )}
       </MovieDetailsGrid>

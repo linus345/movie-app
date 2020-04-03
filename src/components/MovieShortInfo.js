@@ -1,36 +1,42 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { FontAwesomeIcon as FaIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faCalendar } from '@fortawesome/free-regular-svg-icons';
 
 import Rating from './Rating';
 
-const MovieShortInfo = ({ movie }) => (
+const MovieShortInfo = ({ movie, isMobile }) => (
   <StyledMovieShortInfo>
-    <div>
-      <h1 className="title">{movie.title}</h1>
+    <div className="title-tagline">
+      <h1 className="title">
+        {movie.title.length >= 40 ? (
+          <>{movie.title.substring(0, 36)}...</>
+        ) : movie.title}
+      </h1>
       <h4 className="tagline">{movie.tagline}</h4>
     </div>
-    <div>
-      <Rating average={movie.vote_average} />
-      <div className="time-info">
-        <p>
-          <FaIcon
-            icon={faCalendar}
-            className="icon"
-          />
-          {new Date(movie.release_date).getFullYear()}
-        </p>
-        <p>
-          <FaIcon
-            icon={faClock}
-            className="icon"
-          />
-          {movie.runtime} min
-        </p>
+    {!isMobile && (
+      <div>
+        <Rating average={movie.vote_average} />
+        <div className="time-info">
+          <p>
+            <FaIcon
+              icon={faCalendar}
+              className="icon"
+            />
+            {new Date(movie.release_date).getFullYear()}
+          </p>
+          <p>
+            <FaIcon
+              icon={faClock}
+              className="icon"
+            />
+            {movie.runtime} min
+          </p>
+        </div>
       </div>
-    </div>
+    )}
   </StyledMovieShortInfo>
 );
 
@@ -53,6 +59,12 @@ const StyledMovieShortInfo = styled.div`
       align-items: flex-end;
     }
   }
+
+  ${props => props.isMobile && css`
+    .title-tagline {
+      grid-area: 1 / span 2;
+    }
+  `};
 
   .time-info {
     display: flex;

@@ -44,13 +44,15 @@ const theme = {
     900: "#2A4365",
   },
   breakpoints: {
+    mobile: "(max-width: 575px)",
     tablet: "(max-width: 996px)",
   },
 }
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(window.innerWidth > 996);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 996);
+  const [isTablet, setIsTablet] = useState(window.innerWidth <= 996);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 575);
   const mainEl = useRef(null);
 
   useEffect(() => {
@@ -62,12 +64,21 @@ function App() {
   }, []);
 
   const handleResize = () => {
-    if(window.innerWidth <= 996) {
+    if(window.innerWidth <= 575) {
       setIsMenuOpen(false);
       setIsMobile(true);
+      // both tablet and mobile can be true at the same time
+      // this is to prevent having to check for both mobile
+      // and tablet when it's unnecessary
+      setIsTablet(true);
+    } else if(window.innerWidth <= 996) {
+      setIsMenuOpen(false);
+      setIsMobile(false);
+      setIsTablet(true);
     } else {
       setIsMenuOpen(true);
       setIsMobile(false);
+      setIsTablet(false);
     }
   }
 
@@ -79,13 +90,13 @@ function App() {
             isMenuOpen={isMenuOpen}
             setIsMenuOpen={setIsMenuOpen}
           >
-            {isMobile && <Search isMobile={isMobile} />}
+            {isTablet && <Search isTablet={isTablet} />}
           </Header>
-          {!isMobile && <Search isMobile={isMobile} />}
+          {!isTablet && <Search isTablet={isTablet} />}
           <Sidebar
             isMenuOpen={isMenuOpen}
             setIsMenuOpen={setIsMenuOpen}
-            isMobile={isMobile}
+            isTablet={isTablet}
           />
           {/* Overlay only shows when sidebar is open on small screens */}
           <Overlay
@@ -110,7 +121,13 @@ function App() {
               />
               <Route
                 path="/movie/:movieId"
-                render={props => <Movie mainEl={mainEl} {...props} />}
+                render={props => (
+                  <Movie
+                    isMobile={isMobile}
+                    mainEl={mainEl}
+                    {...props}
+                  />
+                )}
               />
               <Route
                 path="/genre/:genreId"
@@ -118,7 +135,12 @@ function App() {
               />
               <Route
                 path="/actor/:actorId"
-                render={props => <Actor mainEl={mainEl} {...props} />}
+                render={props => (
+                  <Actor
+                    isMobile={isMobile}
+                    mainEl={mainEl}
+                    {...props} />
+                )}
               />
               <Route
                 path="/search/:searchQuery"

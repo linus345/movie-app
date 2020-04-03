@@ -67,6 +67,7 @@ const ImageBox = styled.div`
   background-size: cover;
   background-position: center center;
   width: 100%;
+  max-width: 200px;
   height: 60px;
   border-radius: 5px;
   margin-right: 5px;
