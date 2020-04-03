@@ -11,6 +11,7 @@ import LoadMovies from '../components/LoadMovies';
 import Button from '../components/Button';
 import LoadingActor from '../components/LoadingActor';
 import LoadingMovies from '../components/LoadingMovies';
+import defaultProfile from '../images/default-profile.svg';
 
 const Actor = ({ history, mainEl, isMobile }) => {
   const { actorId } = useParams();
@@ -58,7 +59,9 @@ const Actor = ({ history, mainEl, isMobile }) => {
         {loading ? <LoadingActor /> : (
           <>
             <img
-              src={`${api.imageBase}/w185${actor.profile_path}`}
+              src={actor.profile_path ? (
+                `${api.imageBase}/w185${actor.profile_path}`
+              ) : defaultProfile}
               alt="actor profile image"
               className="actor-profile-image"
             />
