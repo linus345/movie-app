@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import * as api from '../api';
 
 import LoadMovies from '../components/LoadMovies';
-import LoadingMovies from '../components/LoadingMovies';
+import CustomError from '../components/CustomError';
 
 const Genre = ({ mainEl }) => {
   const [movies, setMovies] = useState([]);
@@ -28,15 +28,23 @@ const Genre = ({ mainEl }) => {
       setLoading(true);
       const res = await api.getMoviesByGenreId(genreId, query);
       console.log("res: ", res);
+      // api doesn't respond with an error even when an invalid genre id is
+      // given so an explicit check is needed to throw an error
+      if(res.data.total_results === 0) {
+        throw Error("Invalid genre id");
+      }
       setMovies(res.data.results);
       setPage(res.data.page);
       setTotalPages(res.data["total_pages"]);
     } catch(err) {
       if(err.response) {
-        console.log("err res: ", err.response);
-        setErr(err.response);
+        console.log("genre err res: ", err.response);
+        if(err.response.data.errors.length > 0) {
+          setErr({ ...err.response, message: err.response.data.errors[0] });
+        } else {
+          setErr(err.response);
+        }
       } else {
-        console.log("err: ", err);
         setErr(err);
       }
     } finally {
@@ -47,14 +55,20 @@ const Genre = ({ mainEl }) => {
   return(
     <StyledGenre>
       <h1>Genre movies</h1>
-      <LoadMovies
-        movies={movies}
-        loading={loading}
-        err={err}
-        page={page}
-        totalPages={totalPages}
-        mainEl={mainEl}
-      />
+      {err ? (
+        <CustomError>
+          <p>{err.message || "Something went wrong"}</p>
+        </CustomError>
+      ) : (
+        <LoadMovies
+          movies={movies}
+          loading={loading}
+          err={err}
+          page={page}
+          totalPages={totalPages}
+          mainEl={mainEl}
+        />
+      )}
     </StyledGenre>
   );
 }

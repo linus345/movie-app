@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon as FaIcon } from '@fortawesome/react-fontawesome';
 import { faPlayCircle } from '@fortawesome/free-regular-svg-icons';
@@ -12,6 +12,7 @@ import MovieTabs from '../components/MovieTabs';
 import MovieShortInfo from '../components/MovieShortInfo';
 import Button from '../components/Button';
 import LoadingMovie from '../components/LoadingMovie';
+import CustomError from '../components/CustomError';
 import defaultMovieBackdrop from '../images/default-movie-backdrop.svg';
 
 const Movie = ({ location, history, mainEl, isMobile }) => {
@@ -24,15 +25,22 @@ const Movie = ({ location, history, mainEl, isMobile }) => {
   const getMovie = async (movieId) => {
     try {
       const res = await api.getMovie(movieId);
-      console.log("res: ", res);
+      console.log("movie res: ", res);
       trailerRef.current = getTrailer(res.data.videos.results);
       setMovie(res.data);
     } catch(err) {
       if(err.response) {
-        console.log("err res: ", err.response);
-        setErr(err.response);
+        console.log("movie err res: ", err.response);
+        if(err.response.data.status_message) {
+          setErr({
+            ...err.response,
+            message: err.response.data.status_message
+          });
+        } else {
+          setErr(err.response);
+        }
       } else {
-        console.log("err: ", err);
+        console.log("movie err: ", err);
         setErr(err);
       }
     } finally {
@@ -56,7 +64,6 @@ const Movie = ({ location, history, mainEl, isMobile }) => {
     getMovie(movieId);
   }, [location]);
 
-  if(err) return <p>Error: {JSON.stringify(err)}</p>
   return(
     <Fragment>
       <Button onClick={history.goBack}>
@@ -64,7 +71,11 @@ const Movie = ({ location, history, mainEl, isMobile }) => {
         <p>Back</p>
       </Button>
       <MovieDetailsGrid>
-        {loading ? <LoadingMovie /> : (
+        {loading ? <LoadingMovie /> : err ? (
+          <CustomError>
+            <p>{err.message || "Something went wrong"}</p>
+          </CustomError>
+        ) : (
           <>
             <MoviePoster
               img={movie.backdrop_path ? (
@@ -75,6 +86,7 @@ const Movie = ({ location, history, mainEl, isMobile }) => {
                 <a
                   href={`https://youtube.com/watch?v=${trailerRef.current.key}`}
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="play-button"
                 >
                   <FaIcon icon={faPlayCircle} style={{ color: "white" }} />

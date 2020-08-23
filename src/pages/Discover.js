@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect, useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 
 import * as api from '../api';
 
-import MovieGrid from '../components/MovieGrid';
-import MovieList from '../components/MovieList';
-import Pagination from '../components/Pagination';
 import LoadMovies from '../components/LoadMovies';
-import LoadingMovies from '../components/LoadingMovies';
 
 const Discover = ({ mainEl }) => {
   const [movies, setMovies] = useState([]);
@@ -37,15 +33,19 @@ const Discover = ({ mainEl }) => {
       setTotalPages(res.data["total_pages"]);
     } catch(err) {
       if(err.response) {
-        console.log("err res: ", err.response);
-        setErr(err.response);
+        console.log("this err res: ", err.response);
+        setErr({ ...err.response, status: err.response.status });
       } else {
-        console.log("err: ", err);
+        console.log("this err: ", err);
         setErr(err);
       }
     } finally {
       setLoading(false);
     }
+  }
+
+  if(err && err.status === 404) {
+    return <Redirect to="/404" />
   }
 
   return(

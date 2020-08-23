@@ -9,6 +9,7 @@ import Movie from '../pages/Movie';
 import Genre from '../pages/Genre';
 import Actor from '../pages/Actor';
 import SearchPage from '../pages/SearchPage';
+import NotFound from '../pages/NotFound';
 
 // components
 import Layout from './Layout';
@@ -146,6 +147,8 @@ function App() {
                 path="/search/:searchQuery"
                 render={props => <SearchPage mainEl={mainEl} {...props} />}
               />
+              <Route path="/404" component={NotFound} />
+              <Route render={() => <Redirect to="/404" />} />
             </Switch>
           </Main>
         </Router>

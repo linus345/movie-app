@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 
 import ButtonGroup from '../components/ButtonGroup';
 import { ButtonInGroup } from '../components/Button';
@@ -22,7 +21,7 @@ const Pagination = ({ page, totalPages, mainEl }) => {
     <ButtonGroup>
       <ButtonInGroup
         as={Link}
-        to={`?page=${page == 1 ? page : page - 1}`}
+        to={`?page=${page === 1 ? page : page - 1}`}
         onClick={() => scrollToTop(mainEl)}
       >
         Prev
@@ -43,7 +42,7 @@ const Pagination = ({ page, totalPages, mainEl }) => {
       </ButtonInGroup>
       <ButtonInGroup
         as={Link}
-        to={`?page=${page == totalPages ? page : page + 1}`}
+        to={`?page=${page === totalPages ? page : page + 1}`}
         onClick={() => scrollToTop(mainEl)}
       >
         Next

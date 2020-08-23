@@ -12,26 +12,28 @@ import defaultProfile from '../images/default-profile.svg';
 // Link on name or add a "read more" button
 const MovieCastTab = ({ movie, isMobile }) => (
   <StyledMovieCastTab isMobile={isMobile}>
-    {movie.credits.cast.map(actor => (
-      <ActorCard key={actor.id}>
-        <ActorProfilePicture
-          className="actor-photo"
-          imageUrl={actor.profile_path ? (
-            `${api.imageBase}/w185${actor.profile_path}`
-          ) : defaultProfile}
-        />
-        <div className="actor-info">
-          <p className="actor-name">{actor.name}</p>
-          <p className="actor-role">as <span>{actor.character}</span></p>
-          <Button
-            small={1}
-            as={Link}
-            to={`/actor/${actor.id}`}
-          >
-            Read more</Button>
-        </div>
-      </ActorCard>
-    ))}
+    {movie.credits.cast < 1 ? (<p>No cast found</p>) : (
+      movie.credits.cast.map(actor => (
+        <ActorCard key={actor.id}>
+          <ActorProfilePicture
+            className="actor-photo"
+            imageUrl={actor.profile_path ? (
+              `${api.imageBase}/w185${actor.profile_path}`
+            ) : defaultProfile}
+          />
+          <div className="actor-info">
+            <p className="actor-name">{actor.name}</p>
+            <p className="actor-role">as <span>{actor.character}</span></p>
+            <Button
+              small={1}
+              as={Link}
+              to={`/actor/${actor.id}`}
+            >
+              Read more</Button>
+          </div>
+        </ActorCard>
+      ))
+    )}
   </StyledMovieCastTab>
 );
 
@@ -86,9 +88,6 @@ const ActorCard = styled.div`
       align-self: flex-end;
     }
   }
-`;
-
-const StyledActorLink = styled(Link)`
 `;
 
 const ActorProfilePicture = styled.div`

@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import * as api from '../api';
 
 import LoadMovies from '../components/LoadMovies';
-import LoadingMovies from '../components/LoadingMovies';
 
 const SearchPage = ({ location, mainEl }) => {
   const [movies, setMovies] = useState([]);

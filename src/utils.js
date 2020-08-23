@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 // taken from https://stackoverflow.com/a/42234988
 // slightly modified from the SO answer
@@ -15,5 +15,5 @@ export const useOutsideAlerter = (ref, cb) => {
       // Unbind the event listener on clean up
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [ref]);
+  }, [ref, cb]);
 }

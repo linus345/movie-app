@@ -9,25 +9,24 @@ const LoadMovies = ({ movies, loading, err, page, totalPages, mainEl }) => {
   console.log("rendering LoadMovies");
   return(
     <>
-      {loading ? <LoadingMovies /> : err ? (
-          <p>Error: {JSON.stringify(err)}</p>
-        ) : (
-          <>
-            <MovieGrid>
-              <MovieList movies={movies} mainEl={mainEl} />
-            </MovieGrid>
-            {page &&
-              totalPages &&
-              mainEl &&
-              <Pagination
-                page={page}
-                totalPages={totalPages}
-                mainEl={mainEl}
-              />
-            }
-          </>
-        )
-      }
+      {loading ? <LoadingMovies /> : movies.length === 0 ? (
+        <p>No movies found</p>
+      ) : (
+        <>
+          <MovieGrid>
+            <MovieList movies={movies} mainEl={mainEl} />
+          </MovieGrid>
+          {page &&
+            totalPages &&
+            mainEl &&
+            <Pagination
+              page={page}
+              totalPages={totalPages}
+              mainEl={mainEl}
+            />
+          }
+        </>
+      )}
     </>
   );
 };

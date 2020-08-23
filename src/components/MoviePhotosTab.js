@@ -24,24 +24,26 @@ const MoviePhotosTab = ({ movie }) => {
 
   return (
     <StyledMoviePhotosTab>
-      {movie.images.backdrops.map((image, idx) => (
-        <ImageBox
-          key={idx}
-          className="image"
-          imageUrl={`${api.imageBase}/w300/${image.file_path}`}
-          onClick={() => {
-            setSelectedImage(`${api.imageBase}/w1280/${image.file_path}`);
-            setModalIsOpen(true)
-          }}
-        />
-      ))}
+      {movie.images.backdrops < 1 ? <p>No photos  found</p> : (
+        movie.images.backdrops.map((image, idx) => (
+          <ImageBox
+            key={idx}
+            className="image"
+            imageUrl={`${api.imageBase}/w300/${image.file_path}`}
+            onClick={() => {
+              setSelectedImage(`${api.imageBase}/w1280/${image.file_path}`);
+              setModalIsOpen(true)
+            }}
+          />
+        ))
+      )}
       {modalIsOpen && ReactDOM.createPortal(
         <Modal
           onClose={() => setModalIsOpen(false)}
         >
           <img
             src={selectedImage}
-            alt={`image from the movie ${movie.title}`}
+            alt={`from the movie ${movie.title}`}
             className="full-image"
           />
         </Modal>,

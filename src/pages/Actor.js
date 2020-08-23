@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import { FontAwesomeIcon as FaIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
@@ -11,6 +10,7 @@ import LoadMovies from '../components/LoadMovies';
 import Button from '../components/Button';
 import LoadingActor from '../components/LoadingActor';
 import LoadingMovies from '../components/LoadingMovies';
+import CustomError from '../components/CustomError';
 import defaultProfile from '../images/default-profile.svg';
 
 const Actor = ({ history, mainEl, isMobile }) => {
@@ -32,10 +32,15 @@ const Actor = ({ history, mainEl, isMobile }) => {
       console.log("movie res: ", movieRes);
     } catch(err) {
       if(err.response) {
-        console.log("actor err res: ", err.response);
-        setErr(err.response);
+        if(err.response.data.status_message) {
+          setErr({
+            ...err.response,
+            message: err.response.data.status_message
+          });
+        } else {
+          setErr(err.response);
+        }
       } else {
-        console.log("actor err: ", err);
         setErr(err);
       }
     } finally {
@@ -44,11 +49,9 @@ const Actor = ({ history, mainEl, isMobile }) => {
   }
 
   useEffect(() => {
-    console.log("a: ", actorId);
     getActor(actorId);
-  }, []);
+  }, [actorId]);
 
-  if(err) return <p>{JSON.stringify(err)}</p>
   return (
     <>
       <Button onClick={history.goBack}>
@@ -56,13 +59,17 @@ const Actor = ({ history, mainEl, isMobile }) => {
         <p>Back</p>
       </Button>
       <ActorGrid isMobile={isMobile}>
-        {loading ? <LoadingActor /> : (
+        {loading ? <LoadingActor /> : err ? (
+          <CustomError>
+            <p>{err.message || "Something went wrong"}</p>
+          </CustomError>
+        ) : (
           <>
             <img
               src={actor.profile_path ? (
                 `${api.imageBase}/w185${actor.profile_path}`
               ) : defaultProfile}
-              alt="actor profile image"
+              alt="actor profile"
               className="actor-profile-image"
             />
             <div className="info">
